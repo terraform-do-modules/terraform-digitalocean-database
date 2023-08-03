@@ -19,17 +19,34 @@ module "vpc" {
 }
 
 ##------------------------------------------------
-## mysql database cluster module call
+## mongodb database cluster module call
 ##------------------------------------------------
-module "mysql" {
+module "mongodb" {
   source                       = "../../"
   name                         = local.name
   environment                  = local.environment
   region                       = local.region
-  cluster_engine               = "mysql"
-  cluster_version              = "8"
+  cluster_engine               = "mongodb"
+  cluster_version              = "6"
   cluster_size                 = "db-s-1vcpu-1gb"
   cluster_node_count           = 1
   cluster_private_network_uuid = module.vpc.id
-  mysql_sql_mode               = "ANSI,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,STRICT_ALL_TABLES,ALLOW_INVALID_DATES"
+  cluster_maintenance = {
+    maintenance_hour = "02:00:00"
+    maintenance_day  = "saturday"
+  }
+  databases = ["testdb"]
+  users = [
+    {
+      name = "test"
+    }
+  ]
+
+  create_firewall = false
+  firewall_rules = [
+    {
+      type  = "ip_addr"
+      value = "0.0.0.0"
+    }
+  ]
 }
