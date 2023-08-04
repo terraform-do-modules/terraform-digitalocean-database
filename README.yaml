@@ -5,36 +5,279 @@
 #
 
 # Name of this project
-name : Terraform Module Template
+name : Terraform Module Database
 
 # License of this project
 license: "APACHE"
 
 # Canonical GitHub repo
-github_repo: clouddrove/terraform-module-template
+github_repo: clouddrove/terraform-module-database
 
 # Badges to display
 badges:
   - name: "Latest Release"
-    image: "https://img.shields.io/github/release/clouddrove/terraform-module-template.svg"
-    url: "https://github.com/clouddrove/terraform-module-template/releases/latest"
+    image: "https://img.shields.io/github/release/terraform-do-modules/terraform-digitalocean-database.svg"
+    url: "https://github.com/terraform-do-modules/terraform-digitalocean-database/releases/latest"
   - name: "tfsec"
-    image: "https://github.com/clouddrove/terraform-module-template/actions/workflows/tfsec.yml/badge.svg"
-    url: ""
+    image: "https://github.com/terraform-do-modules/terraform-digitalocean-database/actions/workflows/tfsec.yml/badge.svg"
+    url: "https://github.com/terraform-do-modules/terraform-digitalocean-database/actions/workflows/tfsec.yml"
   - name: "Licence"
     image: "https://img.shields.io/badge/License-APACHE-blue.svg"
     url: "LICENSE.md"
 
+prerequesties:
+  - name: Terraform 1.5.4
+    url: https://learn.hashicorp.com/terraform/getting-started/install.html
+
 #  description of this project
 description: |-
-  Terraform module template to create new modules using this as baseline
+  Terraform module to create Digitalocean database service resource on Digitalocean.
 # extra content
 include:
   - "terraform.md"
 
 # How to use this project
-# How to use this project
-usage: |-
-  Here are some examples of how you can use this module in your inventory structure:
+usage : |-
+  Here are examples of how you can use this module in your inventory structure:
+  ### basic example
   ```hcl
-    ```
+      module "mysql" {
+      source                       = "terraform-do-modules/database/digitalocean"
+      version                      = "1.0.0"
+      name                         = "app"
+      environment                  = "test"
+      region                       = "blr1"
+      cluster_engine               = "redis"
+      cluster_version              = "6"
+      cluster_size                 = "db-s-1vcpu-1gb"
+      cluster_node_count           = 1
+      cluster_private_network_uuid = module.vpc.id
+      redis_eviction_policy        = "volatile_lru"
+      cluster_maintenance = {
+        maintenance_hour = "02:00:00"
+        maintenance_day  = "saturday"
+      }
+      create_firewall = false
+      firewall_rules = [
+        {
+          type  = "ip_addr"
+          value = "192.168.1.1"
+        }
+      ]
+    }
+  ```
+  ## complete example
+  ```hcl
+      module "mysql" {
+      source                       = "terraform-do-modules/database/digitalocean"
+      version                      = "1.0.0"
+      name                         = "app"
+      environment                  = "test"
+      region                       = "blr1"
+      cluster_engine               = "mysql"
+      cluster_version              = "8"
+      cluster_size                 = "db-s-1vcpu-1gb"
+      cluster_node_count           = 1
+      cluster_private_network_uuid = module.vpc.id
+      mysql_sql_mode               = "ANSI,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,STRICT_ALL_TABLES,ALLOW_INVALID_DATES"
+      cluster_maintenance = {
+        maintenance_hour = "02:00:00"
+        maintenance_day  = "saturday"
+      }
+      databases = ["testdb"]
+
+      users = [
+        {
+          name              = "test",
+          mysql_auth_plugin = "mysql_native_password"
+        }
+      ]
+
+      create_firewall = false
+      firewall_rules = [
+        {
+          type  = "ip_addr"
+          value = "0.0.0.0"
+        }
+      ]
+    }
+  ```
+  ## mongodb example
+  ```hcl
+      module "mongodb" {
+      source                       = "terraform-do-modules/database/digitalocean"
+      version                      = "1.0.0"
+      name                         = "app"
+      environment                  = "test"
+      region                       = "blr1"
+      cluster_engine               = "mongodb"
+      cluster_version              = "6"
+      cluster_size                 = "db-s-1vcpu-1gb"
+      cluster_node_count           = 1
+      cluster_private_network_uuid = module.vpc.id
+      cluster_maintenance = {
+        maintenance_hour = "02:00:00"
+        maintenance_day  = "saturday"
+      }
+      databases = ["testdb"]
+      users = [
+        {
+          name = "test"
+        }
+      ]
+
+      create_firewall = false
+      firewall_rules = [
+        {
+          type  = "ip_addr"
+          value = "0.0.0.0"
+        }
+      ]
+    }
+  ```
+  ## mysql example
+  ```hcl
+      module "mysql" {
+      source                       = "terraform-do-modules/database/digitalocean"
+      version                      = "1.0.0"
+      name                         = "app"
+      environment                  = "test"
+      region                       = "blr1"
+      cluster_engine               = "mysql"
+      cluster_version              = "8"
+      cluster_size                 = "db-s-1vcpu-1gb"
+      cluster_node_count           = 1
+      cluster_private_network_uuid = module.vpc.id
+      mysql_sql_mode               = "ANSI,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,STRICT_ALL_TABLES,ALLOW_INVALID_DATES"
+      cluster_maintenance = {
+        maintenance_hour = "02:00:00"
+        maintenance_day  = "saturday"
+      }
+      databases = ["testdb"]
+
+      users = [
+        {
+          name              = "test",
+          mysql_auth_plugin = "mysql_native_password"
+        }
+      ]
+
+      create_firewall = false
+      firewall_rules = [
+        {
+          type  = "ip_addr"
+          value = "0.0.0.0"
+        }
+      ]
+    }
+  ```
+  ## postgresql example
+  ```hcl
+      module "postgresql" {
+      source                       = "terraform-do-modules/database/digitalocean"
+      version                      = "1.0.0"
+      name                         = "app"
+      environment                  = "test"
+      region                       = "blr1"
+      cluster_engine               = "pg"
+      cluster_version              = "15"
+      cluster_size                 = "db-s-1vcpu-1gb"
+      cluster_node_count           = 1
+      cluster_private_network_uuid = module.vpc.id
+      cluster_maintenance = {
+        maintenance_hour = "02:00:00"
+        maintenance_day  = "saturday"
+      }
+      databases = ["testdb"]
+      users = [
+        {
+          name = "test"
+        }
+      ]
+
+      create_pools = true
+      pools = [
+        {
+          name    = "test",
+          mode    = "transaction",
+          size    = 10,
+          db_name = "testdb",
+          user    = "test"
+        }
+      ]
+
+      create_firewall = false
+      firewall_rules = [
+        {
+          type  = "ip_addr"
+          value = "0.0.0.0"
+        }
+      ]
+    }
+  ```
+  ## redis example
+  ```hcl
+      module "redis" {
+      source                       = "terraform-do-modules/database/digitalocean"
+      version                      = "1.0.0"
+      name                         = "app"
+      environment                  = "test"
+      region                       = "blr1"
+      cluster_engine               = "redis"
+      cluster_version              = "6"
+      cluster_size                 = "db-s-1vcpu-1gb"
+      cluster_node_count           = 1
+      cluster_private_network_uuid = module.vpc.id
+      redis_eviction_policy        = "volatile_lru"
+      cluster_maintenance = {
+        maintenance_hour = "02:00:00"
+        maintenance_day  = "saturday"
+      }
+      create_firewall = false
+      firewall_rules = [
+        {
+          type  = "ip_addr"
+          value = "192.168.1.1"
+        }
+      ]
+    }
+  ```
+  ## database replica example
+  ```hcl
+      module "redis" {
+      source                       = "terraform-do-modules/database/digitalocean"
+      version                      = "1.0.0"
+      name                         = "app"
+      environment                  = "test"
+      region                       = "blr1"
+      cluster_engine               = "mysql"
+      cluster_version              = "8"
+      cluster_size                 = "db-s-1vcpu-1gb"
+      cluster_node_count           = 1
+      cluster_private_network_uuid = module.vpc.id
+      mysql_sql_mode               = "ANSI,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,STRICT_ALL_TABLES,ALLOW_INVALID_DATES"
+      cluster_maintenance = {
+        maintenance_hour = "02:00:00"
+        maintenance_day  = "saturday"
+      }
+      databases = ["testdb", "testdbt"]
+
+      users = [
+        {
+          name              = "test1",
+          mysql_auth_plugin = "mysql_native_password"
+        }
+      ]
+
+      ## database replica
+      replica_enable = true
+
+      create_firewall = false
+      firewall_rules = [
+        {
+          type  = "ip_addr"
+          value = "0.0.0.0"
+        }
+      ]
+    }
+  ```

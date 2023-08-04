@@ -32,4 +32,27 @@ module "mysql" {
   cluster_node_count           = 1
   cluster_private_network_uuid = module.vpc.id
   mysql_sql_mode               = "ANSI,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,STRICT_ALL_TABLES,ALLOW_INVALID_DATES"
+  cluster_maintenance = {
+    maintenance_hour = "02:00:00"
+    maintenance_day  = "saturday"
+  }
+  databases = ["testdb", "testdbt"]
+
+  users = [
+    {
+      name              = "test1",
+      mysql_auth_plugin = "mysql_native_password"
+    }
+  ]
+
+  ## database replica
+  replica_enable = true
+
+  create_firewall = true
+  firewall_rules = [
+    {
+      type  = "ip_addr"
+      value = "0.0.0.0"
+    }
+  ]
 }

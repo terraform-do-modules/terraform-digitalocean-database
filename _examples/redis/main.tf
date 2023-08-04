@@ -19,17 +19,28 @@ module "vpc" {
 }
 
 ##------------------------------------------------
-## mysql database cluster module call
+## redis database cluster module call
 ##------------------------------------------------
-module "mysql" {
+module "redis" {
   source                       = "../../"
   name                         = local.name
   environment                  = local.environment
   region                       = local.region
-  cluster_engine               = "mysql"
-  cluster_version              = "8"
+  cluster_engine               = "redis"
+  cluster_version              = "6"
   cluster_size                 = "db-s-1vcpu-1gb"
   cluster_node_count           = 1
   cluster_private_network_uuid = module.vpc.id
-  mysql_sql_mode               = "ANSI,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,STRICT_ALL_TABLES,ALLOW_INVALID_DATES"
+  redis_eviction_policy        = "volatile_lru"
+  cluster_maintenance = {
+    maintenance_hour = "02:00:00"
+    maintenance_day  = "saturday"
+  }
+  create_firewall = false
+  firewall_rules = [
+    {
+      type  = "ip_addr"
+      value = "192.168.1.1"
+    }
+  ]
 }
