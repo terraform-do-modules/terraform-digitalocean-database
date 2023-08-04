@@ -23,6 +23,12 @@ variable "managedby" {
   description = "ManagedBy, eg 'terraform-do-modules' or 'hello@clouddrove.com'"
 }
 
+variable "enabled" {
+  type        = bool
+  default     = true
+  description = "Flag to control the resources creation."
+}
+
 variable "cluster_engine" {
   type        = string
   default     = ""
@@ -46,6 +52,12 @@ variable "region" {
   type        = string
   default     = null
   description = "DigitalOcean region where the cluster will reside"
+}
+
+variable "replica_region" {
+  type        = string
+  default     = null
+  description = "DigitalOcean region where the replica will reside"
 }
 
 variable "cluster_node_count" {
@@ -73,6 +85,11 @@ variable "mysql_sql_mode" {
 }
 
 variable "cluster_maintenance" {
+  type        = map(string)
+  default     = null
+  description = "The day and the start hour of the maintenance window policy"
+}
+variable "backup_restore" {
   type        = map(string)
   default     = null
   description = "The day and the start hour of the maintenance window policy"
@@ -112,4 +129,21 @@ variable "firewall_rules" {
   type        = list(map(string))
   default     = []
   description = "List of firewall rules associated with the cluster"
+}
+variable "project_id" {
+  type        = string
+  default     = null
+  description = "The ID of the project that the database cluster is assigned to. If excluded when creating a new database cluster, it will be assigned to your default project."
+}
+
+variable "replica_size" {
+  type        = string
+  default     = "db-s-1vcpu-1gb"
+  description = "Database Droplet size associated with the replica (ex. db-s-1vcpu-1gb). Note that when resizing an existing replica, its size can only be increased. Decreasing its size is not supported."
+}
+
+variable "replica_enable" {
+  type        = bool
+  default     = false
+  description = "Flag to control the resources creation."
 }

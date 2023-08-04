@@ -37,6 +37,7 @@ module "mysql" {
     maintenance_day  = "saturday"
   }
   databases = ["testdb", "testdbt"]
+
   users = [
     {
       name              = "test1",
@@ -44,7 +45,10 @@ module "mysql" {
     }
   ]
 
-  create_firewall = false
+  ## database replica
+  replica_enable = true
+
+  create_firewall = true
   firewall_rules = [
     {
       type  = "ip_addr"

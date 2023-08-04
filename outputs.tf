@@ -134,3 +134,51 @@ output "database_firewall_rule" {
   ]
   description = "A map with rule's uuid, type, value and created_at params"
 }
+
+output "database_replica_firewall_rule" {
+  value = [
+    for r in digitalocean_database_firewall.replica-firewall[*].rule : r
+  ]
+  description = "A map with rule's uuid, type, value and created_at params"
+}
+
+output "replica_id" {
+  value       = digitalocean_database_replica.replica-example[*].id
+  description = "The ID of the database replica created by Terraform."
+}
+
+output "replica_host_name" {
+  value       = digitalocean_database_replica.replica-example[*].host
+  description = "The ID of the database replica created by Terraform."
+}
+
+output "replica_cluster_private_host" {
+  value       = digitalocean_database_replica.replica-example[*].private_host
+  description = "Same as host, but only accessible from resources within the account and in the same region."
+}
+
+output "replica_cluster_port" {
+  value       = digitalocean_database_replica.replica-example[*].port
+  description = "Network port that the database replica is listening on."
+}
+
+output "replica_cluster_uri" {
+  value       = digitalocean_database_replica.replica-example[*].uri
+  sensitive   = true
+  description = "The full URI for connecting to the database replica."
+}
+output "replica_cluster_default_database" {
+  value       = digitalocean_database_replica.replica-example[*].database
+  description = "Name of the replica's default database."
+}
+
+output "replica_cluster_default_user" {
+  value       = digitalocean_database_replica.replica-example[*].user
+  description = "Username for the replica cluster's default user"
+}
+
+output "replica_cluster_default_password" {
+  value       = digitalocean_database_replica.replica-example[*].password
+  sensitive   = true
+  description = "Password for the replica cluster's default user"
+}
