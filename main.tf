@@ -26,6 +26,7 @@ resource "digitalocean_database_cluster" "cluster" {
   eviction_policy      = var.redis_eviction_policy
   sql_mode             = var.mysql_sql_mode
   project_id           = var.project_id
+  storage_size_mib     = var.storage_size_mib
 
   dynamic "maintenance_window" {
     for_each = var.cluster_maintenance != null ? [var.cluster_maintenance] : []
@@ -101,7 +102,7 @@ resource "digitalocean_database_replica" "replica-example" {
   cluster_id           = join("", digitalocean_database_cluster.cluster[*].id)
   name                 = format("%s-${var.cluster_engine}-replica", module.labels.id)
   size                 = var.replica_size
-  region               = var.region
+  region               = var.replica_region
   tags                 = [module.labels.id]
   private_network_uuid = var.cluster_private_network_uuid
 }
