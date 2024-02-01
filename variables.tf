@@ -148,7 +148,7 @@ variable "replica_enable" {
   description = "Flag to control the resources creation."
 }
 variable "storage_size_mib" {
-  type = string
+  type        = string
   description = "Defines the disk size, in MiB, allocated to the cluster"
-  default = null
+  default     = null
 }
