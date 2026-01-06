@@ -5,31 +5,37 @@ on:
   pull_request:
   workflow_dispatch:
 jobs:
-  tf-checks-complete-example:
+  complete-example:
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
     with:
       working_directory: './_examples/complete/'
-  tf-checks-basic-example:
+  basic-example:
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
     with:
       working_directory: './_examples/basic/'
-  tf-checks-mongodb-example:
+  mongodb-example:
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
     with:
       working_directory: './_examples/mongodb/'
-  tf-checks-mysql-example:
+  mysql-example:
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
     with:
       working_directory: './_examples/mysql/'
-  tf-checks-postgresql-example:
+  postgresql-example:
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
     with:
       working_directory: './_examples/postgresql/'
-  tf-checks-redis-example:
+  redis-example:
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
     with:
       working_directory: './_examples/redis/'
-  tf-checks-replica-db-example:
+  replica-db-example:
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
     with:
       working_directory: './_examples/replica-db/'
+
+# Seperate Job for TFlint workflow call
+  tf-lint:
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-lint.yml@master
+    secrets:
+      GITHUB: ${{ secrets.GITHUB }}
