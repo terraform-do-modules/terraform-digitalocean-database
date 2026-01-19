@@ -6,31 +6,31 @@ on:
   workflow_dispatch:
 jobs:
   complete-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.1
     with:
       working_directory: './_examples/complete/'
   basic-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.1
     with:
       working_directory: './_examples/basic/'
   mongodb-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.1
     with:
       working_directory: './_examples/mongodb/'
   mysql-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.1
     with:
       working_directory: './_examples/mysql/'
   postgresql-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.1
     with:
       working_directory: './_examples/postgresql/'
   redis-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.1
     with:
       working_directory: './_examples/redis/'
   replica-db-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.0
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.4.1
     with:
       working_directory: './_examples/replica-db/'
 
