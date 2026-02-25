@@ -13,6 +13,7 @@ jobs:
     with:
       provider: digitalocean
       working_directory: ./_examples/basic/
+
   complete-example:
     uses: clouddrove/github-shared-workflows/.github/workflows/stf-checks.yml@521761c1a5cf68d919980a2ed84b755182aeabfe
     with:
