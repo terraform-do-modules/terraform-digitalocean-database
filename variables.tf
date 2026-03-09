@@ -152,3 +152,28 @@ variable "storage_size_mib" {
   description = "Defines the disk size, in MiB, allocated to the cluster"
   default     = null
 }
+
+
+variable "create_logsink_opensearch" {
+  type        = bool
+  default     = false
+  description = "Controls if OpenSearch logsink resources should be created"
+}
+
+variable "logsink_opensearch" {
+  type        = list(map(any))
+  default     = []
+  description = "List of OpenSearch logsink configurations"
+}
+
+variable "create_logsink_rsyslog" {
+  type        = bool
+  default     = false
+  description = "Controls if rsyslog logsink resources should be created"
+}
+
+variable "logsink_rsyslog" {
+  type        = list(map(any))
+  default     = []
+  description = "List of rsyslog logsink configurations"
+}
