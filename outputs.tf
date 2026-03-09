@@ -182,3 +182,18 @@ output "replica_cluster_default_password" {
   sensitive   = true
   description = "Password for the replica cluster's default user"
 }
+
+
+output "database_logsink_opensearch_id" {
+  value = {
+    for k, sink in digitalocean_database_logsink_opensearch.logsink_opensearch : k => sink.id
+  }
+  description = "The IDs of OpenSearch logsinks"
+}
+
+output "database_logsink_rsyslog_id" {
+  value = {
+    for k, sink in digitalocean_database_logsink_rsyslog.logsink_rsyslog : k => sink.id
+  }
+  description = "The IDs of rsyslog logsinks"
+}

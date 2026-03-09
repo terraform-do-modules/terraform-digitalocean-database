@@ -316,6 +316,33 @@ Here are examples of how you can use this module in your inventory structure:
 
 
 
+
+
+## Logsink usage example
+
+```hcl
+module "database" {
+  source  = "terraform-do-modules/database/digitalocean"
+  version = "x.x.x"
+
+  name           = "app"
+  environment    = "prod"
+  cluster_engine = "pg"
+  cluster_version = "15"
+  region         = "nyc1"
+
+  create_logsink_opensearch = true
+  logsink_opensearch = [
+    {
+      name           = "opensearch-logs"
+      endpoint       = "https://opensearch.example.com:9200"
+      index_prefix   = "db-logs"
+      index_days_max = "7"
+    }
+  ]
+}
+```
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -329,11 +356,15 @@ Here are examples of how you can use this module in your inventory structure:
 | cluster\_version | The version of the cluster | `string` | `""` | no |
 | create\_firewall | Controls if firewall should be created | `bool` | `false` | no |
 | create\_pools | Controls if pools should be created | `bool` | `false` | no |
+| create\_logsink\_opensearch | Controls if OpenSearch logsink resources should be created | `bool` | `false` | no |
+| create\_logsink\_rsyslog | Controls if rsyslog logsink resources should be created | `bool` | `false` | no |
 | databases | A list of databases in the cluster | `list(string)` | `[]` | no |
 | enabled | Flag to control the resources creation. | `bool` | `true` | no |
 | environment | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `""` | no |
 | firewall\_rules | List of firewall rules associated with the cluster | `list(map(string))` | `[]` | no |
 | label\_order | Label order, e.g. `name`,`application`. | `list(any)` | <pre>[<br>  "name",<br>  "environment"<br>]</pre> | no |
+| logsink\_opensearch | List of OpenSearch logsink configurations | `list(map(any))` | `[]` | no |
+| logsink\_rsyslog | List of rsyslog logsink configurations | `list(map(any))` | `[]` | no |
 | managedby | ManagedBy, eg 'terraform-do-modules' or 'hello@clouddrove.com' | `string` | `"terraform-do-modules"` | no |
 | mysql\_sql\_mode | A comma separated string specifying the SQL modes for a MySQL cluster. | `string` | `null` | no |
 | name | Name  (e.g. `app` or `cluster`). | `string` | `""` | no |
@@ -369,6 +400,8 @@ Here are examples of how you can use this module in your inventory structure:
 | database\_cluster\_urn | The uniform resource name of the database cluster |
 | database\_firewall\_id | A unique identifier for the firewall |
 | database\_firewall\_rule | A map with rule's uuid, type, value and created\_at params |
+| database\_logsink\_opensearch\_id | The IDs of OpenSearch logsinks |
+| database\_logsink\_rsyslog\_id | The IDs of rsyslog logsinks |
 | database\_replica\_firewall\_rule | A map with rule's uuid, type, value and created\_at params |
 | db\_name | The name for the database |
 | replica\_cluster\_default\_database | Name of the replica's default database. |

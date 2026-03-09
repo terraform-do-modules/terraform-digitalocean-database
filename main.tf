@@ -122,3 +122,36 @@ resource "digitalocean_database_firewall" "replica-firewall" {
   }
   depends_on = [digitalocean_database_cluster.cluster]
 }
+
+
+##-----------------------------------------------------------------------------
+#Description : Provides a DigitalOcean database OpenSearch logsink resource.
+##-----------------------------------------------------------------------------
+resource "digitalocean_database_logsink_opensearch" "logsink_opensearch" {
+  for_each        = var.enabled && var.create_logsink_opensearch ? { for l in var.logsink_opensearch : l.name => l } : {}
+  cluster_id      = join("", digitalocean_database_cluster.cluster[*].id)
+  name            = each.value.name
+  endpoint        = each.value.endpoint
+  index_prefix    = each.value.index_prefix
+  index_days_max  = lookup(each.value, "index_days_max", null)
+  ca_cert         = lookup(each.value, "ca_cert", null)
+  timeout_seconds = lookup(each.value, "timeout_seconds", null)
+}
+
+##-----------------------------------------------------------------------------
+#Description : Provides a DigitalOcean database rsyslog logsink resource.
+##-----------------------------------------------------------------------------
+resource "digitalocean_database_logsink_rsyslog" "logsink_rsyslog" {
+  for_each        = var.enabled && var.create_logsink_rsyslog ? { for l in var.logsink_rsyslog : l.name => l } : {}
+  cluster_id      = join("", digitalocean_database_cluster.cluster[*].id)
+  name            = each.value.name
+  server          = each.value.server
+  port            = each.value.port
+  tls             = lookup(each.value, "tls", null)
+  format          = lookup(each.value, "format", null)
+  logline         = lookup(each.value, "logline", null)
+  structured_data = lookup(each.value, "structured_data", null)
+  ca_cert         = lookup(each.value, "ca_cert", null)
+  client_cert     = lookup(each.value, "client_cert", null)
+  client_key      = lookup(each.value, "client_key", null)
+}
