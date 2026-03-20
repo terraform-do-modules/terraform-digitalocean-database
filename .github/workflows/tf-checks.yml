@@ -6,13 +6,13 @@ on:
   workflow_dispatch:
 jobs:
   basic-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/stf-checks.yml@2.1.0 # pinned to latest
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@2.1.0 # pinned to latest
     with:
       provider: none
       working_directory: './_examples/basic/'
       provider: none
   complete-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/stf-checks.yml@2.1.0 # pinned to latest
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@2.1.0 # pinned to latest
     with:
       provider: none
       working_directory: './_examples/complete/'
