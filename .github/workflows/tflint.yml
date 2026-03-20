@@ -8,6 +8,6 @@ on:
 
 jobs:
   tf-lint:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-lint.yml@master
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-lint.yml@2.1.0
     secrets:
       GITHUB: ${{ secrets.GITHUB }}
