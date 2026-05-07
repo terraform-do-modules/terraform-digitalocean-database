@@ -32,7 +32,7 @@ prerequesties:
     url: https://opentofu.org/docs/intro/install/
 
 description: |-
-  Terraform module to create and manage Virtual Private Cloud on Digital Ocean.
+  Terraform module to create and manage Database Service Resource on Digital Ocean.
 
 usage : |-
   Here are examples of how you can use this module in your inventory structure:
