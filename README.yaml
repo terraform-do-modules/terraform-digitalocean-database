@@ -1,49 +1,46 @@
----
-#
-# This is the canonical configuration for the `README.md`
-# Run `make readme` to rebuild the `README.md`
-#
+name: Terraform DigitalOcean Database
 
-# Name of this project
-name : Terraform Module Database
+intro: |-
+  Streamline operations, automate workflows, improve team collaboration, and deploy with confidence using our complete DevOps toolkit.
 
-# License of this project
+badges_text: "Latest Release | tfsec | License | Changelog"
+
+about: |-
+  Terraform module to create and manage Database Service Resource on Digital Ocean.
+
 license: "APACHE"
 
-# Canonical GitHub repo
-github_repo: clouddrove/terraform-module-database
+github_repo: terraform-do-modules/terraform-digitalocean-database
 
-# Badges to display
 badges:
-  - name: "Latest Release"
-    image: "https://img.shields.io/github/release/terraform-do-modules/terraform-digitalocean-database.svg"
-    url: "https://github.com/terraform-do-modules/terraform-digitalocean-database/releases/latest"
-  - name: "tfsec"
-    image: "https://github.com/terraform-do-modules/terraform-digitalocean-database/actions/workflows/tfsec.yml/badge.svg"
-    url: "https://github.com/terraform-do-modules/terraform-digitalocean-database/actions/workflows/tfsec.yml"
+  - name: "Terraform"
+    image: "https://img.shields.io/badge/Terraform-v1.6-green"
+    url: "https://www.terraform.io"
+
+  - name: "OpenTofu"
+    image: "https://img.shields.io/badge/OpenTofu-v1.6-purple"
+    url: "https://opentofu.org"
+
   - name: "Licence"
     image: "https://img.shields.io/badge/License-APACHE-blue.svg"
     url: "LICENSE.md"
 
 prerequesties:
-  - name: Terraform 1.5.4
-    url: https://learn.hashicorp.com/terraform/getting-started/install.html
+  - name: Terraform >= 1.6.0
+    url: https://developer.hashicorp.com/terraform/install
+  - name: OpenTofu >= 1.6.0
+    url: https://opentofu.org/docs/intro/install/
 
-#  description of this project
 description: |-
-  Terraform module to create Digitalocean database service resource on Digitalocean.
-# extra content
-include:
-  - "terraform.md"
+  Terraform module to create and manage Database Service Resource on Digital Ocean.
 
-# How to use this project
 usage : |-
   Here are examples of how you can use this module in your inventory structure:
   ### basic example
   ```hcl
       module "mysql" {
       source                       = "terraform-do-modules/database/digitalocean"
-      version                      = "1.0.0"
+      version                      = "1.0.6"
       name                         = "app"
       environment                  = "test"
       region                       = "blr1"
@@ -70,7 +67,7 @@ usage : |-
   ```hcl
       module "mysql" {
       source                       = "terraform-do-modules/database/digitalocean"
-      version                      = "1.0.0"
+      version                      = "1.0.6"
       name                         = "app"
       environment                  = "test"
       region                       = "blr1"
@@ -106,7 +103,7 @@ usage : |-
   ```hcl
       module "mongodb" {
       source                       = "terraform-do-modules/database/digitalocean"
-      version                      = "1.0.0"
+      version                      = "1.0.6"
       name                         = "app"
       environment                  = "test"
       region                       = "blr1"
@@ -139,7 +136,7 @@ usage : |-
   ```hcl
       module "mysql" {
       source                       = "terraform-do-modules/database/digitalocean"
-      version                      = "1.0.0"
+      version                      = "1.0.6"
       name                         = "app"
       environment                  = "test"
       region                       = "blr1"
@@ -175,7 +172,7 @@ usage : |-
   ```hcl
       module "postgresql" {
       source                       = "terraform-do-modules/database/digitalocean"
-      version                      = "1.0.0"
+      version                      = "1.0.6"
       name                         = "app"
       environment                  = "test"
       region                       = "blr1"
@@ -219,7 +216,7 @@ usage : |-
   ```hcl
       module "redis" {
       source                       = "terraform-do-modules/database/digitalocean"
-      version                      = "1.0.0"
+      version                      = "1.0.6"
       name                         = "app"
       environment                  = "test"
       region                       = "blr1"
@@ -246,7 +243,7 @@ usage : |-
   ```hcl
       module "redis" {
       source                       = "terraform-do-modules/database/digitalocean"
-      version                      = "1.0.0"
+      version                      = "1.0.6"
       name                         = "app"
       environment                  = "test"
       region                       = "blr1"
@@ -280,4 +277,30 @@ usage : |-
         }
       ]
     }
+  ```
+
+  ### Deploy with Terraform
+  ```bash
+  terraform init
+  terraform plan
+  terraform apply
+  ```
+
+  ### Deploy with OpenTofu
+  ```bash
+  tofu init
+  tofu plan
+  tofu apply
+  ```
+
+  ### Deploy with Terragrunt
+  See [`examples/terragrunt/terragrunt.hcl`](./examples/terragrunt/terragrunt.hcl) for a complete example using DigitalOcean Spaces as remote state.
+  ```bash
+  export DIGITALOCEAN_TOKEN="<your-token>"
+  export SPACES_ACCESS_KEY_ID="<your-spaces-key>"
+  export SPACES_SECRET_ACCESS_KEY="<your-spaces-secret>"
+  cd examples/terragrunt
+  terragrunt init
+  terragrunt plan
+  terragrunt apply
   ```
