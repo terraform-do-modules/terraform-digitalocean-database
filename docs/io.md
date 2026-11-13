@@ -30,6 +30,10 @@
 | `replica_size` | Database Droplet size for the replica (e.g. `db-s-1vcpu-1gb`). Can only be increased after creation. | `string` | `"db-s-1vcpu-1gb"` | no |
 | `replica_enable` | Flag to control read replica creation. | `bool` | `false` | no |
 | `storage_size_mib` | Disk size in MiB allocated to the cluster. | `string` | `null` | no |
+| `create_logsink_opensearch` | Controls if OpenSearch logsink resources should be created | `bool` | `false` | no |
+| `create_logsink_rsyslog` | Controls if rsyslog logsink resources should be created | `bool` | `false` | no |
+| `logsink_opensearch` | List of OpenSearch logsink configurations | `list(map(any))` | `[]` | no |
+| `logsink_rsyslog` | List of rsyslog logsink configurations | `list(map(any))` | `[]` | no |
 
 ---
 
@@ -67,3 +71,5 @@
 | `replica_cluster_default_database` | Name of the replica's default database. |
 | `replica_cluster_default_user` | Username for the replica cluster's default user. |
 | `replica_cluster_default_password` | Password for the replica cluster's default user. *(sensitive)* |
+| `database_logsink_opensearch_id` | The IDs of OpenSearch logsinks |
+| `database_logsink_rsyslog_id` | The IDs of rsyslog logsinks |
