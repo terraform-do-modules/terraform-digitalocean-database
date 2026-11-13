@@ -9,13 +9,13 @@ permissions:
 
 jobs:
   basic-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/stf-checks.yml@2.1.0
+    uses: clouddrove/github-shared-workflows/.github/workflows/stf-checks.yml@v2.1.7
     with:
       provider: digitalocean
       working_directory: ./examples/basic/
 
   complete-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/stf-checks.yml@2.1.0
+    uses: clouddrove/github-shared-workflows/.github/workflows/stf-checks.yml@v2.1.7
     with:
       provider: digitalocean
       working_directory: ./examples/complete/
